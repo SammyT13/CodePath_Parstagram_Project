@@ -7,6 +7,7 @@
 
 import UIKit
 import AlamofireImage
+import Parse
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -24,8 +25,30 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Do any additional setup after loading the view.
     }
     
-    
+    // Creates object for table
     @IBAction func onSubmitButton(_ sender: Any) {
+        //an object for posting
+        let post = PFObject(className: "Posts")
+        
+        //Below is the schema(columns/rows) for parse
+        post["caption"] = commentField.text!
+        post["author"] = PFUser.current() // it's the current user logged in
+        
+        let imageData = imageView.image!.pngData() // saves the image
+        let file = PFFileObject(name: "image.png", data: imageData!) // a binary object to add image as a column
+        
+        post["image"] = file
+        
+        
+        post.saveInBackground{ (success, error) in
+            if (success){
+                self.dismiss(animated: true, completion: nil)
+                print("saved!")
+            }
+            else {
+                print("error!")
+            }
+        }
     }
     
     // Launches the camera
@@ -55,7 +78,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         //resizes image
         let size = CGSize(width: 300, height: 300)
         //this is an Alamofire extension to scale down image
-        let scaledImage = image.af_imageScaled(to: size)
+        let scaledImage = image.af.imageScaled(to: size)
         //This puts the scaled image inside of image view
         imageView.image = scaledImage
         
