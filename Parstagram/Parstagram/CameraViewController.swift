@@ -12,15 +12,11 @@ import Parse
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var commentField: UITextField!
     
-    
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageView.isUserInteractionEnabled = true
 
         // Do any additional setup after loading the view.
     }
