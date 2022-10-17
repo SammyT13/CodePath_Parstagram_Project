@@ -74,7 +74,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         //resizes image
         let size = CGSize(width: 300, height: 300)
         //this is an Alamofire extension to scale down image
-        let scaledImage = image.af.imageScaled(to: size)
+        let scaledImage = image.af.imageAspectScaled(toFill: size)
         //This puts the scaled image inside of image view
         imageView.image = scaledImage
         
